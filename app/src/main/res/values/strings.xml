@@ -1,3 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TaskLite</string>
+    <string name="app_description">Kelola tugasmu secara offline</string>
+    <string name="add_first_task">Tambah Tugas Pertama</string>
+    <string name="search_hint">Cari tugas...</string>
+    <string name="empty_tasks_title">Belum ada tugas</string>
+    <string name="empty_tasks_message">Tekan tombol + untuk menambahkan tugas pertama.</string>
+    <string name="add_task">Tambah Tugas</string>
+    <string name="edit_task">Edit Tugas</string>
+    <string name="save">Simpan</string>
+    <string name="cancel">Batal</string>
+    <string name="delete">Hapus</string>
+    <string name="categories">Kategori</string>
+    <string name="settings">Pengaturan</string>
 </resources>
