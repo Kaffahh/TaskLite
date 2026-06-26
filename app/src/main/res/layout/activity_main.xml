@@ -1,37 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
     android:background="@color/app_background">
 
-    <TextView
-        android:id="@+id/tvAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/text_primary"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="@string/app_description"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvAppName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCategories"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_button_secondary"
+                android:contentDescription="@string/categories"
+                android:text="K" />
+
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_button_secondary"
+                android:contentDescription="@string/settings"
+                android:text="P" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_input"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+
+            <RadioGroup
+                android:id="@+id/rgFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/filterAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:text="Semua" />
+
+                <RadioButton
+                    android:id="@+id/filterToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Hari Ini" />
+
+                <RadioButton
+                    android:id="@+id/filterOverdue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Terlambat" />
+
+                <RadioButton
+                    android:id="@+id/filterCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Selesai" />
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/tvSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Urut: Deadline terdekat"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
+
+            <ListView
+                android:id="@+id/listTasks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@android:color/transparent"
+                android:clipToPadding="false"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"
+                android:paddingBottom="80dp" />
+
+            <LinearLayout
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvEmptyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_tasks_title"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvEmptyMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/empty_tasks_message"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnAddTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:minHeight="48dp"
-        android:text="@string/add_first_task" />
-
-</LinearLayout>
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_fab"
+        android:contentDescription="@string/add_task"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+</FrameLayout>
