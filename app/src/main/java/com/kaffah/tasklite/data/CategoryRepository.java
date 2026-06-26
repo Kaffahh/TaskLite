@@ -45,6 +45,36 @@ public class CategoryRepository {
         return databaseHelper.getWritableDatabase().insert(DatabaseContract.Categories.TABLE, null, values);
     }
 
+    public int update(Category category) {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.Categories.NAME, category.name.trim());
+        values.put(DatabaseContract.Categories.COLOR, category.color);
+        values.put(DatabaseContract.Categories.UPDATED_AT, System.currentTimeMillis());
+        return databaseHelper.getWritableDatabase().update(
+                DatabaseContract.Categories.TABLE,
+                values,
+                DatabaseContract.Categories.ID + " = ?",
+                new String[]{String.valueOf(category.id)});
+    }
+
+    public int delete(long categoryId) {
+        return databaseHelper.getWritableDatabase().delete(
+                DatabaseContract.Categories.TABLE,
+                DatabaseContract.Categories.ID + " = ?",
+                new String[]{String.valueOf(categoryId)});
+    }
+
+    public boolean isNameUsed(String name, long exceptId) {
+        String sql = "SELECT COUNT(*) FROM " + DatabaseContract.Categories.TABLE
+                + " WHERE " + DatabaseContract.Categories.NAME + " = ? COLLATE NOCASE"
+                + " AND " + DatabaseContract.Categories.ID + " != ?";
+        try (Cursor cursor = databaseHelper.getReadableDatabase().rawQuery(
+                sql,
+                new String[]{name.trim(), String.valueOf(exceptId)})) {
+            return cursor.moveToFirst() && cursor.getInt(0) > 0;
+        }
+    }
+
     private Category readCategory(Cursor cursor) {
         return new Category(
                 cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.Categories.ID)),

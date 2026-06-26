@@ -5,6 +5,7 @@ plugins {
 android {
     namespace = "com.kaffah.tasklite"
     compileSdk = 36
+    buildToolsVersion = "36.1.0"
 
     defaultConfig {
         applicationId = "com.kaffah.tasklite"

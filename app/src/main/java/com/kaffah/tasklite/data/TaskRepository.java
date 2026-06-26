@@ -24,6 +24,10 @@ public class TaskRepository {
     }
 
     public List<Task> getTasks(String filter, String searchQuery) {
+        return getTasks(filter, searchQuery, false);
+    }
+
+    public List<Task> getTasks(String filter, String searchQuery, boolean showCompletedInAll) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         List<String> args = new ArrayList<>();
         StringBuilder where = new StringBuilder();
@@ -37,6 +41,8 @@ public class TaskRepository {
         } else if (FILTER_OVERDUE.equals(filter)) {
             where.append("tasks.is_completed = 0 AND tasks.due_at IS NOT NULL AND tasks.due_at < ?");
             args.add(String.valueOf(System.currentTimeMillis()));
+        } else if (showCompletedInAll) {
+            where.append("1 = 1");
         } else {
             where.append("tasks.is_completed = 0");
         }
@@ -53,11 +59,25 @@ public class TaskRepository {
         String sql = "SELECT tasks.*, categories.name AS category_name, categories.color AS category_color "
                 + "FROM tasks LEFT JOIN categories ON categories.id = tasks.category_id "
                 + "WHERE " + where
-                + " ORDER BY CASE WHEN tasks.due_at IS NULL THEN 1 ELSE 0 END, "
+                + " ORDER BY tasks.is_completed ASC, CASE WHEN tasks.due_at IS NULL THEN 1 ELSE 0 END, "
                 + "tasks.due_at ASC, tasks.priority DESC, tasks.created_at DESC";
 
         List<Task> tasks = new ArrayList<>();
         try (Cursor cursor = db.rawQuery(sql, args.toArray(new String[0]))) {
+            while (cursor.moveToNext()) {
+                tasks.add(readTask(cursor));
+            }
+        }
+        return tasks;
+    }
+
+    public List<Task> getAllTasksForBackup() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String sql = "SELECT tasks.*, categories.name AS category_name, categories.color AS category_color "
+                + "FROM tasks LEFT JOIN categories ON categories.id = tasks.category_id "
+                + "ORDER BY tasks.created_at ASC";
+        List<Task> tasks = new ArrayList<>();
+        try (Cursor cursor = db.rawQuery(sql, null)) {
             while (cursor.moveToNext()) {
                 tasks.add(readTask(cursor));
             }

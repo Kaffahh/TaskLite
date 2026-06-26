@@ -20,12 +20,20 @@ public class PreferenceManager {
         return preferences.getString(KEY_THEME_MODE, "system");
     }
 
+    public void setThemeMode(String themeMode) {
+        preferences.edit().putString(KEY_THEME_MODE, themeMode).apply();
+    }
+
     public String getDefaultSort() {
         return preferences.getString(KEY_DEFAULT_SORT, "due_asc");
     }
 
     public boolean showCompletedInAll() {
         return preferences.getBoolean(KEY_SHOW_COMPLETED_IN_ALL, false);
+    }
+
+    public void setShowCompletedInAll(boolean showCompletedInAll) {
+        preferences.edit().putBoolean(KEY_SHOW_COMPLETED_IN_ALL, showCompletedInAll).apply();
     }
 
     public long getDefaultReminderOffset() {

@@ -21,6 +21,7 @@ import com.kaffah.tasklite.R;
 import com.kaffah.tasklite.data.TaskRepository;
 import com.kaffah.tasklite.model.Task;
 import com.kaffah.tasklite.ui.adapter.TaskAdapter;
+import com.kaffah.tasklite.util.PreferenceManager;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
     private final Handler searchHandler = new Handler(Looper.getMainLooper());
 
     private TaskRepository taskRepository;
+    private PreferenceManager preferenceManager;
     private TaskAdapter taskAdapter;
     private TextView tvSummary;
     private TextView tvEmptyTitle;
@@ -46,6 +48,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         taskRepository = new TaskRepository(this);
+        preferenceManager = new PreferenceManager(this);
         bindViews();
         setupActions();
         loadTasks();
@@ -135,7 +138,10 @@ public class MainActivity extends Activity {
     private void loadTasks() {
         String query = etSearch == null ? "" : etSearch.getText().toString();
         databaseExecutor.execute(() -> {
-            List<Task> tasks = taskRepository.getTasks(activeFilter, query);
+            List<Task> tasks = taskRepository.getTasks(
+                    activeFilter,
+                    query,
+                    preferenceManager.showCompletedInAll() && TaskRepository.FILTER_ALL.equals(activeFilter));
             int[] summary = taskRepository.getSummary();
             mainHandler.post(() -> {
                 taskAdapter.submitList(tasks);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_task_item"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/viewColor"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/bg_color_dot" />
+
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnCategoryMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_button_secondary"
+        android:contentDescription="Menu kategori"
+        android:text="..." />
+</LinearLayout>
